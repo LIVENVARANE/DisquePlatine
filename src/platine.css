@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+    --linkColor: #2980b9;
+}
+
+a {
+    color: var(--linkColor);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid gainsboro;
+    background-color: white;
+}
+
+header img {
+    height: 100%;
+}
+
+.bays-wrapper {
+    width: 100%;
+    height: calc(100% - 81px);
+    overflow-y: auto;
+    background-color: white;
+}
+
+.bays-wrapper li {
+    list-style-type: none;
+    height: 120px;
+    padding: 0px 20px;
+    position: relative;
+    border-bottom: 1px solid gainsboro;
+}
+
+.bays-wrapper li.default h6, h5 {
+    margin: 10px 0px;
+}
+
+.bays-wrapper li.default i {
+    cursor: pointer;
+}
+
+.bays-wrapper li.default i.first {
+    margin-right: 30px;
+}
+
+.bays-wrapper li i {
+    position: absolute;
+    color: var(--linkColor);
+    font-size: 14pt;
+    top: 0px;
+    right: 10px;
+}
+
+.bays-wrapper li a.close {
+    position: absolute;
+    left: 20px;
+    bottom: 10px;
+}
+
+.bays-wrapper li a.unavailable {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.bays-wrapper li h6 {
+    margin: 10px 0px;
+}
+
+#wizard {
+    z-index: -100;
+    position: fixed;
+    width: calc(100% - 100px);
+    height: 100%;
+    top: 0px;
+    padding: 0px 50px;
+    background-color: white;
+}
+
+#wizard h1 {
+    text-align: center;
+    font-size: 15pt;
+    margin-top: 0px;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.3s ease-out;
+}
+
+#wizard a {
+    text-align: right;
+    display: block;
+    margin: 10px;
+    font-size: 9pt;
+}
+
+#wizard input {
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    border-radius: 7px;
+    outline: none;
+    margin-bottom: 20px;
+    border: 1px solid gainsboro;
+}
+
+#wizard div.button {
+    width: calc(100% - 100px);
+    text-align: center;
+    height: 30px;
+    background-color: #2980b9;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    line-height: 30px;
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    cursor: pointer;
+}

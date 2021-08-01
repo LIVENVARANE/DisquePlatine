@@ -1,0 +1,30 @@
+{
+  "name": "platine-app",
+  "version": "0.0.1",
+  "description": "Objectif disque de platine",
+  "main": "main.js",
+  "dependencies": {
+    "keytar": "^7.7.0"
+  },
+  "devDependencies": {
+    "electron": "https://github.com/castlabs/electron-releases#v11.4.9-wvvmp",
+    "electron-builder": "22.11.4"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --dir"
+  },
+  "build": {
+    "productName": "DisquePlatine",
+    "electronVersion": "11.4.9",
+    "electronDownload": {
+      "version": "11.4.9-wvvmp",
+      "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
+    },
+    "win": {
+      "icon": "./src/assets/icon.ico"
+    }
+  },
+  "author": "LVN",
+  "license": "ISC"
+}
