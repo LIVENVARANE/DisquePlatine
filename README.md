@@ -1,4 +1,4 @@
-# platine-app
+# DisquePlatine
 An interface to run multiple Spotify bots at the same time
 
 ### Still in a early state of developement
