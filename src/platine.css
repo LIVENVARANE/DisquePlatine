@@ -67,6 +67,16 @@ header img {
     right: 10px;
 }
 
+.bays-wrapper li i.fa-eye {
+    right: 35px;
+    cursor: pointer;
+}
+
+.bays-wrapper li i.fa-eye.unavailable {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
 .bays-wrapper li a.close {
     position: absolute;
     left: 20px;
@@ -131,4 +141,96 @@ header img {
     bottom: 30px;
     left: 50px;
     cursor: pointer;
+}
+
+#default-manager {
+    z-index: -100;
+    position: fixed;
+    width: calc(100% - 100px);
+    height: 100%;
+    top: 0px;
+    padding: 0px 50px;
+    background-color: white;
+}
+
+#default-manager h1 {
+    text-align: center;
+    font-size: 15pt;
+    margin-top: 0px;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.3s ease-out;
+}
+
+#default-manager a {
+    text-align: right;
+    display: block;
+    margin: 10px;
+    font-size: 9pt;
+}
+
+#default-manager input {
+    text-align: center;
+    width: 100%;
+    height: 30px;
+    border-radius: 7px;
+    outline: none;
+    margin-bottom: 20px;
+    border: 1px solid gainsboro;
+}
+
+#default-manager span {
+    font-size: 8pt;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+}
+
+#default-manager div.button {
+    width: calc(100% - 100px);
+    text-align: center;
+    height: 30px;
+    background-color: #2980b9;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    line-height: 30px;
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    cursor: pointer;
+}
+
+#alert-wrapper {
+    display: none;
+    z-index: 1000;
+    height: 57px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: #eaeaea;
+    border-top: 1px solid #cacaca;
+}
+
+#alert-wrapper i {
+    position: absolute;
+    font-size: 14pt;
+    right: 14px;
+    bottom: 12px;
+    cursor: pointer;
+    color: #bf3f3f;
+}
+
+#alert-wrapper #alert {
+    line-height: 40px;
+    margin-left: 15px;
+    width: 86%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }

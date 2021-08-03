@@ -2,6 +2,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="assets/icon.ico">
         <title>Disque Platine</title>
         <link rel="stylesheet" href="platine.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -10,16 +11,18 @@
     </head>
     <body>
         <header align="center">
-            <img src="assets/header.png" />
+            <img src="assets/header.png" draggable="false" />
         </header>
         <div class="bays-wrapper" id="bays">
             <li class="default">
                 <h5>Bienvenue sur DisquePlatine</h5>
                 <h6>Streams totaux (Spotify uniq.): <span id="streams-counter">Chargement...</span>   <a onclick="refreshStreamCount()" title="Automatique: toute les 5 minutes.">Rafraichîr</a></a></h6>
                 <br />
-                <a onclick="presentWizard()">Ajouter une interface Spotify</a>
-                <i title="Importer une configuration d'interfaces" class="fas fa-file-import first"></i>
-                <i title="Exporter la configuration des interfaces" class="fas fa-file-export"></i>
+                <a onclick="presentWizard()" style="position: relative; top: -5px;">Ajouter une interface Spotify</a>
+                <br>
+                <a onclick="presentDefaultManager()" id="default-track-button">Séléctionner le morceau par défaut</a>
+                <i onclick="importConfiguration()" title="Importer une configuration d'interfaces" class="fas fa-file-import first"></i>
+                <i onclick="exportConfiguration()" title="Exporter la configuration des interfaces" class="fas fa-file-export"></i>
             </li>
         </div>
         <div id="wizard">
@@ -27,7 +30,17 @@
             <a onclick="cleanWizard()">Annuler</a>
             <br><br>
             <input id="w-token" type="text" placeholder="Token Bearer" spellcheck="false" />
+            <input id="w-track" type="text" placeholder="URL du morceau (Vide = valeur par défaut)" spellcheck="false" />
             <div class="button" onclick="addBayFromWizard()">Ajouter l'interface</div>
         </div>
+        <div id="default-manager">
+            <h1 id="dm-header">Séléctionner le morceau par défaut</h1>
+            <a onclick="closeDefaultManager()">Annuler</a>
+            <br><br>
+            <input id="dm-track" type="text" placeholder="Lien Spotify du morceau" spellcheck="false" />
+            <span>ex: https://open.spotify.com/track/2gZUPNdnz5Y45eiGxpHGSc?si=68cb6ff072a64fb3</span>
+            <div class="button" onclick="changeDefaultTrackFromDefaultManager()">Modifier le morceau par défaut</div>
+        </div>
+        <div id="alert-wrapper"><span id="alert"></span><i onclick="document.getElementById('alert-wrapper').style.display = 'none';" class="fas fa-times"></i></div>
     </body>
 </html>
