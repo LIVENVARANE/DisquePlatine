@@ -24,7 +24,8 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      webSecurity: false
+      webSecurity: false,
+      plugins: true,
     }
   })
 
@@ -39,7 +40,7 @@ function createWindow() {
   });
 }
 
-  app.on('ready', () => {
+  app.on('widevine-ready', () => {
     createWindow();
     win.loadFile('src/platine.html');
 
@@ -78,14 +79,49 @@ function createWindow() {
         webPreferences: {
           preload: path.join(__dirname, './bayPreload.js'),
           nodeIntegration: false,
-          contextIsolation: false
+          contextIsolation: false,
+          plugins: true,
+          session: session.fromPartition('session-' + bayNumber.toString()) //per bay session
         }
       });
-      
+
+      bays[bayNumber].webContents.debugger.attach('1.3');
+
+      //reset session
+      session.fromPartition('session-' + bayNumber.toString()).clearCache();
+      session.fromPartition('session-' + bayNumber.toString()).clearStorageData();
+
       //set proxy
-      bays[bayNumber].webContents.session.setProxy({ proxyRules: data['proxy'].replace(/(\r\n|\n|\r)/gm, "") });
-      bays[bayNumber].loadURL('https://open.spotify.com');
-      //bays[bayNumber].loadURL('https://api.ipify.org/?format=json');
+      session.fromPartition('session-' + bayNumber.toString()).setProxy({ proxyRules: data['proxy'].replace(/(\r\n|\n|\r)/gm, "") });
+
+      //fake user agent
+      session.fromPartition('session-' + bayNumber.toString()).webRequest.onBeforeSendHeaders((details, callback) => {
+        //details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36';
+        details.requestHeaders['User-Agent'] = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)';
+
+        callback({ cancel: false, requestHeaders: details.requestHeaders });
+      });
+
+      //get device id
+      session.fromPartition('session-' + bayNumber.toString()).webRequest.onBeforeRequest((details, callback) => {
+        if(details.url.includes('spotify.com/track-playback/v1/devices')) {
+          if(details.method == 'POST') { //avoid OPTIONS call
+            bays[bayNumber].webContents.executeJavaScript('var deviceId = "' + JSON.parse(details.uploadData[0]['bytes'].toString('utf8'))['device']['device_id'] + '";')
+          }
+        }
+
+        callback({ cancel: false });
+      });
+
+      const dcCookie = { url: 'http://open.spotify.com', name: 'sp_dc', value: 'AQDXmcb_PDRN2aQxKnCjyYySFfIgrb7ZU2XC1GVcA5Sk4l0uR3ey0tIZNjBekgWlxtTHzn0L56CeK6ymc4SX1d9pXEa6OXt2SUmUw7sNHXuUMA' }
+      const keyCookie = { url: 'http://open.spotify.com', name: 'sp_key', value: '4e5a6779-b640-4870-8f39-872601286384' }
+      session.fromPartition('session-' + bayNumber.toString()).cookies.set(dcCookie).then(() => {
+        session.fromPartition('session-' + bayNumber.toString()).cookies.set(keyCookie).then(() => {
+          bays[bayNumber].loadURL('https://open.spotify.com/?utm_source=pwa_install');
+        });
+      });
+
+      //bays[bayNumber].loadURL('https://api.ipify.org/?format=json');        
 
       bays[bayNumber].setMenuBarVisibility(false);
       bays[bayNumber].webContents.setAudioMuted(true);
